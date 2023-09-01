@@ -11,7 +11,8 @@ export const converterToAudio = async (req: Request,res: Response) => {
     const filePath: string = path.join(__dirname, '../utils/convert/audio', `${info.videoDetails.title.split('-')[0].trim()}.mp3`)
     //  ytdl(videoUrl, {quality: 'highest', filter: 'audioonly' }).pipe(fs.createWriteStream(filePath))  
     ytdl(videoUrl, {quality: 'highest', filter: 'audioonly' }).pipe(res)  
-      return res.status(201).download(filePath)
+      // return res.status(201)
+      // return res.status(201).download(filePath)
   } catch (error: unknown) {
     return res.status(500).json(error)
   }
