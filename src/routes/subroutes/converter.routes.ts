@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { converterToMp4 } from "../../controllers/converter/convertermp4";
-import { converterToAudio } from "../../controllers/convertermp3";
+import { converterToAudio } from "../../controllers/converter/convertermp3";
 
 const router = Router()
 

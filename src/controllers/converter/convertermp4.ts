@@ -9,14 +9,12 @@ export const converterToMp4 = async (req: Request,res: Response) => {
 
     res.header("Content-Disposition", 'attachment; filename="audio.mp3');
     const info = await ytdl.getInfo(videoUrl)
-    // const videosPath = path.join(__dirname, '../utils/convert/video' , `${info.videoDetails.title.split('-')[0].trim()}.mp4`)
-    ytdl(videoUrl, {quality: 'highest' }).pipe(res)  
-    // ytdl(videoUrl, {quality: 'highest' }).pipe(fs.createWriteStream(videosPath))  
-    
-    // const video = ytdl.chooseFormat({})
-    // if(video){
-    //   return res.status(201).json({success: true})
-    // }
+    const videoPath: string = path.join(__dirname, '../../utils/convert/video' , `${info.videoDetails.title.split('-')[0].trim()}.mp4`)
+    const video = ytdl(videoUrl, {quality: 'highest' }).pipe(fs.createWriteStream(videoPath))  
+    video.on('close', () => {
+      console.log('downloading...')
+      return res.download(videoPath)
+    })
   } catch (error: unknown) {
     return res.status(500).json(error)
   }
